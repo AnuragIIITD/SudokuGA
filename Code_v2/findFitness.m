@@ -7,7 +7,7 @@ fitness = zeros(size(sudoku));
 
 for i=1:9
     for j=1:9
-        fitness(i, j) = sum(sudoku(i, :) == sudoku(i, j)) + sum(sudoku(:, j) == sudoku(i, j));
+        fitness(i, j) = (sum(sudoku(i, :) == sudoku(i, j)) > 1) + (sum(sudoku(:, j) == sudoku(i, j)) > 1);
     end
 end
 
