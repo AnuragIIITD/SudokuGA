@@ -60,10 +60,21 @@ for i=1:num_epochs
         end
     end
     
+  if(min(net_fitness)<=Threshold)
+   disp('Sudoku Solved !!')
+   solution = sudoku_pop{find(net_fitness==min(net_fitness),1)};
+   solvedSudoku = unwrapSudoku(solution);
+   inputSudoku = unwrapSudoku(sudoku);
+   disp('Input Sudoku :')
+   disp(inputSudoku)
+   disp('Solution :')
+   disp(solvedSudoku)
+   break; 
+  end  
     
 end
 
 % Plot max fitness per epoch
-plot(1:num_epochs, fit_max); xlabel('Epochs'); ylabel('Max fitness'); title('Fitness with epoch');
+plot(1:num_epochs, fit_max); xlabel('Epochs'); ylabel('Max fitness'); title('Fitness with epoch - With Mutation');
 
 % sudoku_out = unwrapSudoku(sudoku);

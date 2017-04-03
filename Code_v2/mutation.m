@@ -8,7 +8,7 @@ n = sqrt(size(population{1},2));
 m = n^2;
 for i = 1:size(population,2)
 prob_mat{i} = logsig(fitness_mat{i});
-prob_mat{i}(prob_mat{i} == 0.5) = 0.2;
+prob_mat{i}(prob_mat{i} == 0.5) = 0;
 mutation_mat{i} = zeros(size(prob_mat{i}));
 
 for i2 = 1 :size(mutation_mat{i},1)

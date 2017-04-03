@@ -76,6 +76,7 @@ plot(1:Epochs,fitnessVals); hold on
 
 disp('Final Solution: ');
 solution = population{find(popFitness==min(popFitness),1)};
+[ solved_sudoku ] = wrapSudoku( sudoku_grid );
 disp(solution);
 end
 

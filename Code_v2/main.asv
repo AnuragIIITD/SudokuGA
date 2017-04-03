@@ -35,33 +35,41 @@ fit_max = zeros(1, num_epochs);
 for i=1:num_epochs
     [sudoku_pop, fitness_matrix, net_fitness] = cross_over(sudoku_pop, fitness_matrix, net_fitness);
     [sudoku_pop] = mutation(sudoku_pop, fitness_matrix, givens);
-    for j=1:size(population,2)
+    for j=1:size(sudoku_pop,2)
         fitness_matrix{j} = findFitness(sudoku_pop{j});
         net_fitness(j) = sum(fitness_matrix{j}(:));
     end
     
-    fit_max(i) = net_fitness(net_fitness==min(net_fitness));    
+    fit_max(i) = net_fitness(find(net_fitness==min(net_fitness),1));    
     
     if(i > numSlopePoints)
         
         slope = max(fit_max(i-numSlopePoints:i)) - min(fit_max(i-numSlopePoints:i));
         
-        % disp(slope)
+        
         if(slope <= slopeThreshold)
             %% Reset the population
             disp('Resetting Population ...')
-            [~,bestFitness] = 
-            bestChild = sudoku_pop{find(fit_max==sortedFitness(1),1)};
-            population = initPop(sudoku,popSize,n);
-            population{1} = bestChild;
-            continue;
+            bestChild = sudoku_pop{net_fitness==fit_max(i)};
+            for j=1:pop_size
+                sudoku_pop{j} = initializeSudoku(sudoku, givens);
+                fitness_matrix{j} = findFitness(sudoku_pop{j});
+                net_fitness(j) = sum(fitness_matrix{j}(:));
+            end
+            sudoku_pop{1} = bestChild;            
         end
     end
     
+  if(min(net_fitness)<=Threshold)
+   disp('Sudoku Solved !!')
+   solution = sudoku_pop{find(net_fitness==min(net_fitness),1)};
+   wrapSudoku(solution);
+   break; 
+  end  
     
 end
 
 % Plot max fitness per epoch
-plot(1:num_epochs, fit_max); xlabel('Epochs'); ylabel('Max fitness'); title('Fitness with epoch');
+plot(1:num_epochs, fit_max); xlabel('Epochs'); ylabel('Max fitness'); title('Fitness with epoch - W/O Mutation');
 
 % sudoku_out = unwrapSudoku(sudoku);
