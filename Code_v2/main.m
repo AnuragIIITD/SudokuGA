@@ -1,5 +1,8 @@
-close all;
+close all; 
+% clear all;
 
+% profile on
+tic
 num_epochs = 100;
 
 % Input a sudoku (now manually)
@@ -27,8 +30,6 @@ end
 [net_fitness, net_fitness_idx] = sort(net_fitness);
 sudoku_pop = sudoku_pop(net_fitness_idx);
 fitness_matrix = fitness_matrix(net_fitness_idx);
-
-
 
 % Perform cross-over and mutation to generate new population
 fit_max = zeros(1, num_epochs);
@@ -73,7 +74,8 @@ for i=1:num_epochs
   end  
     
 end
-
+toc
+% profile viewer
 % Plot max fitness per epoch
 plot(1:num_epochs, fit_max); xlabel('Epochs'); ylabel('Max fitness'); title('Fitness with epoch - With Mutation');
 
