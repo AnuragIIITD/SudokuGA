@@ -6,11 +6,13 @@ rng('shuffle', 'twister')
 
 % profile on
 tic
-num_epochs = 100;
-n = 3;
+num_epochs = 10000;
+n = 4;
 m = n*n;
 % Input a sudoku (now manually)
-sudoku_in = [0,0,4,3,0,0,2,0,9,0,0,5,0,0,9,0,0,1,0,7,0,0,6,0,0,4,3,0,0,6,0,0,2,0,8,7,1,9,0,0,0,7,4,0,0,0,5,0,0,8,3,0,0,0,6,0,0,0,0,0,1,0,5,0,0,3,5,0,8,6,9,0,0,4,2,9,1,0,3,0,0];
+load hexadocu1.mat
+% sudoku_in = [0,0,4,3,0,0,2,0,9,0,0,5,0,0,9,0,0,1,0,7,0,0,6,0,0,4,3,0,0,6,0,0,2,0,8,7,1,9,0,0,0,7,4,0,0,0,5,0,0,8,3,0,0,0,6,0,0,0,0,0,1,0,5,0,0,3,5,0,8,6,9,0,0,4,2,9,1,0,3,0,0];
+sudoku_in = a;
 sudoku_in = transpose(reshape(sudoku_in, m, m));        % Transform into a matrix
 
 sudoku = wrapSudokuToGridArrays(sudoku_in);             % Transform into 1-D array of 3x3 grids
@@ -20,7 +22,7 @@ numSlopePoints = 5;
 slopeThreshold = 0.5;
 
 % Initialize a popultion of sudokus
-pop_size = 10;
+pop_size = 20;
 sudoku_pop = cell(1, pop_size);
 fitness_matrix = cell(1, pop_size);
 net_fitness = zeros(1, pop_size);

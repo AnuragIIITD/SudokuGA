@@ -12,7 +12,7 @@ for i=1:m
     new_digits = setdiff(all_digits, current_givens);
     rand_idx = randperm(length(new_digits));
     grid(grid_givens == 0) = new_digits(rand_idx);
-    sudoku_out((i-1)*9+1 : i*9) = grid;
+    sudoku_out((i-1)*m+1 : i*m) = grid;
 end
 
 end

@@ -2,10 +2,10 @@ function [ population, fitness_mat, fitness_net ] = cross_over( population, fitn
 %UNTITLED8 Summary of this function goes here
 %   Detailed explanation goes here
 
-m = size(fitness_mat,2);
+m = size(fitness_mat{1,1},2);
 n = sqrt(m);
 parents = population(1:2);
-cross_over_spot = randi(8);
+cross_over_spot = randi(m);
 
 % Generate the two children
 child = cell(1, 2);
@@ -13,7 +13,7 @@ child_fit_matrix = cell(1, 2);
 child_fitness = zeros(1, 2);
 
 for i=1:2
-    child{i} = [parents{i}(1 : cross_over_spot*9), parents{3-i}(cross_over_spot*9 + 1 : end)];
+    child{i} = [parents{i}(1 : cross_over_spot*m), parents{3-i}(cross_over_spot*m + 1 : end)];
     child_fit_matrix{i} = findFitness(child{i});
     child_fitness(i) = sum(child_fit_matrix{i}(:));
     
