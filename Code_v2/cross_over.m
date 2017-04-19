@@ -2,6 +2,8 @@ function [ population, fitness_mat, fitness_net ] = cross_over( population, fitn
 %UNTITLED8 Summary of this function goes here
 %   Detailed explanation goes here
 
+m = size(fitness_mat,2);
+n = sqrt(m);
 parents = population(1:2);
 cross_over_spot = randi(8);
 

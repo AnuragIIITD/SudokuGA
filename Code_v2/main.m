@@ -1,13 +1,17 @@
 close all; 
 % clear all;
 
+
+rng('shuffle', 'twister')
+
 % profile on
 tic
 num_epochs = 100;
-
+n = 3;
+m = n*n;
 % Input a sudoku (now manually)
 sudoku_in = [0,0,4,3,0,0,2,0,9,0,0,5,0,0,9,0,0,1,0,7,0,0,6,0,0,4,3,0,0,6,0,0,2,0,8,7,1,9,0,0,0,7,4,0,0,0,5,0,0,8,3,0,0,0,6,0,0,0,0,0,1,0,5,0,0,3,5,0,8,6,9,0,0,4,2,9,1,0,3,0,0];
-sudoku_in = transpose(reshape(sudoku_in, 9, 9));        % Transform into a matrix
+sudoku_in = transpose(reshape(sudoku_in, m, m));        % Transform into a matrix
 
 sudoku = wrapSudokuToGridArrays(sudoku_in);             % Transform into 1-D array of 3x3 grids
 givens = sudoku ~= 0;                                   % Givens are designated by '1'
@@ -20,7 +24,6 @@ pop_size = 10;
 sudoku_pop = cell(1, pop_size);
 fitness_matrix = cell(1, pop_size);
 net_fitness = zeros(1, pop_size);
-
 for i=1:pop_size
     sudoku_pop{i} = initializeSudoku(sudoku, givens);
     fitness_matrix{i} = findFitness(sudoku_pop{i});
