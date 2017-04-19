@@ -6,7 +6,7 @@ rng('shuffle', 'twister')
 
 % profile on
 tic
-num_epochs = 10000;
+num_epochs = 5000;
 n = 4;
 m = n*n;
 % Input a sudoku (now manually)
@@ -19,7 +19,7 @@ sudoku = wrapSudokuToGridArrays(sudoku_in);             % Transform into 1-D arr
 givens = sudoku ~= 0;                                   % Givens are designated by '1'
 Threshold = 0;
 numSlopePoints = 5;
-slopeThreshold = 0.5;
+slopeThreshold = 5;
 
 % Initialize a popultion of sudokus
 pop_size = 20;
@@ -40,7 +40,7 @@ fitness_matrix = fitness_matrix(net_fitness_idx);
 fit_max = zeros(1, num_epochs);
 for i=1:num_epochs
     [sudoku_pop, fitness_matrix, net_fitness] = cross_over(sudoku_pop, fitness_matrix, net_fitness);
-    [sudoku_pop] = mutation(sudoku_pop, fitness_matrix, givens);
+    [sudoku_pop] = mutation2(sudoku_pop, fitness_matrix, givens);
     for j=1:size(sudoku_pop,2)
         fitness_matrix{j} = findFitness(sudoku_pop{j});
         net_fitness(j) = sum(fitness_matrix{j}(:));
@@ -56,13 +56,25 @@ for i=1:num_epochs
         if(slope <= slopeThreshold)
             %% Reset the population
             disp('Resetting Population ...')
-            bestChild = sudoku_pop{net_fitness==fit_max(i)};
+            idx = find(net_fitness==fit_max(i),1);
+            cnt = 1;
+            for j = idx
+            bestChild{cnt} = sudoku_pop{j};
+            cnt = cnt +1;
+            end
+            
             for j=1:pop_size
                 sudoku_pop{j} = initializeSudoku(sudoku, givens);
                 fitness_matrix{j} = findFitness(sudoku_pop{j});
                 net_fitness(j) = sum(fitness_matrix{j}(:));
             end
-            sudoku_pop{1} = bestChild;            
+            [sudoku_pop] = mutation2(sudoku_pop, fitness_matrix, givens);
+            for j =1:size(idx,2)
+            sudoku_pop{j} = bestChild{j}; 
+            fitness_matrix{j} = findFitness(bestChild{j});
+            net_fitness(j) = sum(fitness_matrix{j}(:));
+            end
+%             [sudoku_pop] = mutation(sudoku_pop, fitness_matrix, givens);
         end
     end
     

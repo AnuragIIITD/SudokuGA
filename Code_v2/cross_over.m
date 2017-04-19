@@ -13,6 +13,7 @@ child_fit_matrix = cell(1, 2);
 child_fitness = zeros(1, 2);
 
 for i=1:2
+      
     child{i} = [parents{i}(1 : cross_over_spot*m), parents{3-i}(cross_over_spot*m + 1 : end)];
     child_fit_matrix{i} = findFitness(child{i});
     child_fitness(i) = sum(child_fit_matrix{i}(:));
