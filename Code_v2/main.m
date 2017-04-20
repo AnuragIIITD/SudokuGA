@@ -6,7 +6,7 @@ rng('shuffle', 'twister')
 
 % profile on
 tic
-num_epochs = 5000;
+num_epochs = 1000;
 n = 4;
 m = n*n;
 % Input a sudoku (now manually)
@@ -22,7 +22,7 @@ numSlopePoints = 5;
 slopeThreshold = 5;
 
 % Initialize a popultion of sudokus
-pop_size = 20;
+pop_size = 25;
 sudoku_pop = cell(1, pop_size);
 fitness_matrix = cell(1, pop_size);
 net_fitness = zeros(1, pop_size);
