@@ -47,7 +47,7 @@ for t = 1:nMutations
             grid(k:k+n-1)  = mutation_mat{t,i}(1,k:k+n-1);
             swapidx = find(grid);
             if(length(swapidx)>1)
-                population{t,i} = cyclicSwap(population{t,i},swapidx);
+                population{t,i} = randomSwap(population{t,i},swapidx);
             end
         end
     end
@@ -56,7 +56,7 @@ end
 population_out = cell(1,size(population,2));
 for j = 1:size(population,2)
     for i = 1:size(population,1)
-    fitness_matrix{i} = findFitness(population{i,j});
+    fitness_matrix{i} = findFitness(population{i,j},givens);
     net_fitness(i) = sum(fitness_matrix{i}(:));
     end
     [~,I]=min(net_fitness);
@@ -70,10 +70,14 @@ end
 
 %% Perform cyclic swap
 function population = cyclicSwap(population,swapidx)
-temp = population(swapidx(1));
-for i = 1:length(swapidx)-1
-    population(swapidx(i)) = population(swapidx(i+1));
-end
-population(swapidx(end)) = temp;
+    temp = population(swapidx(1));
+    for i = 1:length(swapidx)-1
+        population(swapidx(i)) = population(swapidx(i+1));
+    end
+    population(swapidx(end)) = temp;
 end
 
+function population = randomSwap(population,swapidx)
+    rand_idx = swapidx(randperm(length(swapidx)));
+    population(swapidx) = population(rand_idx);
+end
