@@ -101,8 +101,3 @@ for i=1:num_epochs
 end
 toc
 % profile viewer
-<<<<<<< HEAD
-% Plot max fitness per epoch
-=======
-% Plot max fitness per epoch
->>>>>>> 2612fe4c46d9fe6b41daca12bd10ace9e5785d01
