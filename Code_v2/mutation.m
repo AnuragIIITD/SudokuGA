@@ -38,10 +38,11 @@ end
 
 %% Perform cyclic swap
 function population = cyclicSwap(population,swapidx)
-temp = population(swapidx(1));
-for i = 1:length(swapidx)-1
-    population(swapidx(i)) = population(swapidx(i+1));
+    temp = population(swapidx(1));
+    for i = 1:length(swapidx)-1
+        population(swapidx(i)) = population(swapidx(i+1));
+    end
+    population(swapidx(end)) = temp;
 end
-population(swapidx(end)) = temp;
-end
+
 
